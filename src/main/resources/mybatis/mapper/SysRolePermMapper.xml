@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycsf.persys.modalur.sys.dao.SysRolePermMapper">
+	<delete id="deleteCascadeInfo" parameterType="rolePermVO">
+		delete from sys_role_perm 
+		<where>
+			<if test="role.roleId != -1">
+				role_id = #{role.roleId}
+			</if>
+			<if test="permId!=-1">
+				perm_id = #{permId}
+			</if>
+		</where>
+	</delete>
+	
+	<insert id="insertCascadeInfo" parameterType="rolePermVO">
+		insert into sys_role_perm(role_id,perm_id) values(#{role.roleId},#{permId})
+	</insert>
+</mapper>

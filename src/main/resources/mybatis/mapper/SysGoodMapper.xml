@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycsf.persys.modalur.sys.dao.SysGoodMapper">
+	<insert id="insert" parameterType="sysGood">
+		insert into sys_good(goodId,goodTitle,sellPoint,goodPrice,num,cid,status) 
+		values(#{goodId},#{goodTitle},#{sellPoint},#{goodPrice},#{num},#{cid},#{status})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from sys_good where goodId = #{goodId}
+	</delete>
+	
+	<update id="update" parameterType="sysGood">
+		update sys_good set goodId=#{goodId},goodTitle=#{goodTitle},sellPoint=#{sellPoint},goodPrice=#{goodPrice},
+		num=#{num},cid=#{cid},status=#{status}
+		where goodId = #{goodId}
+	</update>
+	
+	<resultMap type="sysGood" id="sysGood">
+		<result property="goodId" column="goodId"/>
+		<result property="goodTitle" column="goodTitle"/>
+		<result property="sellPoint" column="sellPoint"/>
+		<result property="goodPrice" column="goodPrice"/>
+		<result property="num" column="num"/>
+		
+		<result property="cid" column="cid"/>
+		<result property="status" column="status"/>
+		<result property="created" column="created"/>
+		<result property="updated" column="updated"/>
+		
+	</resultMap>
+	
+	<select id="findAll" parameterType="com.ycsf.persys.common.utils.PageInfo" resultMap="sysGood">
+		select * from sys_good limit #{start},#{size}
+	</select>
+	
+	<select id="getSysGoodById" parameterType="int" resultMap="sysGood">
+		select * from sys_good where goodId = #{goodId}
+	</select>
+	
+	
+	
+	<select id="count" resultType="int">
+		select count(0) from sys_good;
+	</select>
+	
+	<select id="searchSysGood" resultMap="sysGood"> 
+		select * from sys_good where goodTitle like '%${param1}%' and (goodPrice between ${param3} and ${param2})
+	</select>
+	
+</mapper>

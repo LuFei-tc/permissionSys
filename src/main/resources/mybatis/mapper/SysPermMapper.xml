@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycsf.persys.modalur.sys.dao.SysPermMapper">
+	<insert id="insert" parameterType="sysPerm">
+		insert into sys_perm(parent_id,name,url,perms,type,icon,order_num) 
+		values(#{parentId},#{name},#{url},#{perms},#{type},#{icon},#{orderNum})
+		<selectKey keyProperty="permId" order="AFTER" resultType="int">
+	    	select last_insert_id()
+	    </selectKey>
+	</insert>
+	<delete id="delete" parameterType="int">
+		delete from sys_perm where perm_id = #{id}
+	</delete>
+	<update id="update" parameterType="sysPerm">
+		update sys_perm set parent_id = #{parentId},name=#{name},url=#{url},
+		perms=#{perms},type=#{type},icon=#{icon},order_num=#{orderNum} where perm_id = #{permId}
+	</update>
+	
+	<resultMap type="sysPerm" id="sysPerm">
+		<result property="permId" column="perm_id"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="orderNum" column="order_num"/>
+		<result property="name" column="name"/>
+		<result property="url" column="url"/>
+		<result property="perms" column="perms"/>
+		<result property="type" column="type"/>
+		<result property="icon" column="icon"/>
+	</resultMap>
+	
+	<select id="findById" parameterType="int" resultMap="sysPerm">
+		select * from sys_perm where perm_id = #{id}
+	</select>
+	<select id="findAll" parameterType="com.ycsf.persys.common.utils.PageInfo" resultMap="sysPerm">
+		select * from sys_perm limit #{start},#{size}
+	</select>
+	<select id="findByRoleId" parameterType="int" resultMap="sysPerm">
+		select sp.* from sys_perm sp join sys_role_perm srp on
+		sp.perm_id = srp.perm_id where srp.role_id = #{roleId}
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(0) from sys_perm;
+	</select>
+</mapper>

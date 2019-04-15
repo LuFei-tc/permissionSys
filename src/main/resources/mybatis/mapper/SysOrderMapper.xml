@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycsf.persys.modalur.sys.dao.SysOrderMapper">
+	
+	<insert id="insert" parameterType="sysOrder">
+		insert into sys_order(oid,uid,gid,gname,uname,num,price,totalPrice,status,created) 
+		values(#{oid},#{uid},#{gid},#{gname},#{uname},#{num},#{price},#{totalPrice},#{status},#{created})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from sys_order where oid = #{oid}
+	</delete>
+	
+	<select id="findById" parameterType="int" resultMap="sysOrder">
+		select * from sys_order where oid = #{oid}
+	</select>
+	
+	<select id="findAll"  resultMap="sysOrder">
+		select * from sys_order
+	</select>
+
+	<resultMap type="sysOrder" id="sysOrder">
+		<result property="oid" column="oid"/>
+		<result property="uid" column="uid"/>
+		<result property="gid" column="gid"/>
+		<result property="gname" column="gname"/>
+		<result property="uname" column="uname"/>
+		<result property="num" column="num"/>
+		<result property="price" column="price"/>
+		<result property="totalPrice" column="totalPrice"/>
+		<result property="status" column="status"/>
+		<result property="created" column="created"/>	
+	</resultMap>
+
+
+	<select id="findAllByUname" parameterType="String" resultMap="sysOrder">
+		select * from sys_order where uname = #{uname}
+	</select>
+</mapper>

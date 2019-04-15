@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycsf.persys.modalur.sys.dao.SysRoleMapper">
+	<insert id="insert" parameterType="sysRole">
+		 insert into sys_role(role_name,remark,create_user_id,create_time) 
+		 values(#{roleName},#{remark},#{createUser.userId},#{createTime})
+		 <selectKey keyProperty="roleId" order="AFTER" resultType="int">
+	    	select last_insert_id()
+	    </selectKey>
+	</insert>
+	<delete id="delete" parameterType="int">
+		delete from sys_role where perm_id = #{id}
+	</delete>
+	<update id="update" parameterType="sysRole">
+		 update sys_role role_name=#{roleName},remark=#{remark},create_user_id=#{createUser.userId},
+		 create_time = #{createTime} where role_id = #{roleId}
+	</update>
+	
+	<resultMap type="sysRole" id="sysRole">
+		<result property="roleId" column="role_id"/>
+		<result property="roleName" column="role_name"/>
+		<result property="remark" column="remark"/>
+		<result property="createTime" column="create_num"/>
+		<association property="createUser" javaType="sysUser">
+			<result property="userId" column="create_user_id"/>
+		</association>
+		<collection property="sysPerms" ofType="sysPerm" column="role_id"
+		select="com.ycsf.persys.modalur.sys.dao.SysPermMapper.findByRoleId"></collection>
+	</resultMap>
+	
+	<select id="findById" parameterType="int" resultMap="sysRole">
+		select * from sys_role where role_id = #{id}
+	</select>
+	<select id="findAll" parameterType="com.ycsf.persys.common.utils.PageInfo" resultMap="sysRole">
+		select * from sys_role limit #{start},#{size}
+	</select>
+	<select id="findByUserId" parameterType="int" resultMap="sysRole">
+		select sr.* from sys_role sr join sys_user_role sur on sr.role_id = sur.role_id
+		where sur.user_id = #{id}
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(0) from sys_role;
+	</select>
+</mapper>
