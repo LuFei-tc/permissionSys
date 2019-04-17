@@ -35,11 +35,11 @@
 		<form action="/login" method="post">
 			<div class="form-group">
 				<label>用户名</label>
-				<input class="form-control" placeholder="please input your username" name="username">
+				<input class="form-control" placeholder="please input your username..." name="username">
 			</div>
 			<div class="form-group">
 				<label>密码</label>
-				<input class="form-control" placeholder="please input your passowrd" name="password" type="password">
+				<input class="form-control" placeholder="please input your passowrd..." name="password" type="password">
 			</div>
 			<button type="submit" class="btn btn-primary">登录</button>
 			<button type="reset" class="btn btn-success"> 重置</button>
