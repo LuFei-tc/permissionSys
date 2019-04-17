@@ -12,9 +12,12 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @MapperScan("com.ycsf.persys.modalur.sys.dao")
+public class PermissionSysApplication extends SpringBootServletInitializer{
 
-public class PermissionSysApplication{
-
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(PermissionSysApplication.class);
+    }
     @Bean
     @ConditionalOnMissingBean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
